@@ -1,0 +1,13 @@
+{
+ "type": "Feature",
+ "geometry": {
+  "type": "LineString",
+  "coordinates": [
+   [50.0829899311, 14.436981976],
+   [50.0321184844, 15.7563740015]
+  ]
+ },
+ "properties": {
+  "name": "Prague - Pardubice train stations"
+ }
+}

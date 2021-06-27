@@ -1,0 +1,25 @@
+{
+ "version": 1,
+ "rows": 2,
+ "align": "fill",
+ "rfill": "1, 0",
+ "border": "none",
+ "widgets": [
+  {
+   "align": "fill",
+   "type": "pixmap",
+   "uid": "map_view",
+   "w": 400,
+   "h": 300
+  },
+  {
+   "cols": 3,
+   "border": "none",
+   "widgets": [
+    {"type": "label", "text": "GPS:", "tattr": "bold"},
+    {"type": "label", "text": "unknown", "uid": "gps_status"},
+    {"type": "label", "text": "+-??m", "uid": "gps_error"}
+   ]
+  }
+ ]
+}

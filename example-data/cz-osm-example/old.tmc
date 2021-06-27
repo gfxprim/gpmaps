@@ -1,0 +1,11 @@
+image-width 4096
+image-height 4096
+tile-width 256
+tile-height 256
+tile-format png
+projection 3857
+point-1	0	0	1604566	6467184
+point-2	4096	4096	1614350	6457400
+levels 4
+jpeg-level 0
+empty-color 0x00000000
