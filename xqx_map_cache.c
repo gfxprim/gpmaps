@@ -286,22 +286,14 @@ static int cache_high_iteration(gp_task *self)
 {
 	(void) self;
 
-	int rv = cache_iteration(MAX_PRIO);
-	if (!rv)
-		cache->high_run = 0;
-
-	return rv;
+	return cache_iteration(MAX_PRIO);
 }
 
 static int cache_low_iteration(gp_task *self)
 {
 	(void) self;
 
-	int rv = cache_iteration(MIN_PRIO);
-	if (!rv)
-		cache->low_run = 0;
-
-	return rv;
+	return cache_iteration(MIN_PRIO);
 }
 
 static inline int top_priority(void)
@@ -331,16 +323,14 @@ static void register_event_source(void)
 		.prio = 2,
 	};
 
-	if ((prio == MAX_PRIO) && (!cache->high_run)) {
+	if (prio == MAX_PRIO) {
 		printf("CACHE MAX!\n");
 		gp_widgets_task_ins(&high_prio);
-		cache->high_run = 1;
 	}
 
-	if ((prio > 0) && (!cache->low_run)) {
+	if (prio > 0) {
 		printf("CACHE LOW!\n");
 		gp_widgets_task_ins(&low_prio);
-		cache->low_run = 1;
 	}
 }
 
@@ -349,7 +339,6 @@ static int cache_cleanup_iteration(gp_task *self)
 	(void) self;
 
 	cache_cleanup();
-	cache->cleanup_run = 0;
 	return 0;
 }
 
@@ -361,8 +350,5 @@ static void register_cleanup(void)
 		.prio = 3,
 	};
 
-	if (!cache->cleanup_run) {
-		gp_widgets_task_ins(&cleanup);
-		cache->cleanup_run = 1;
-	}
+	gp_widgets_task_ins(&cleanup);
 }

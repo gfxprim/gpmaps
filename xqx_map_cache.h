@@ -32,8 +32,6 @@ struct xqx_map_cache
 	size_t low_size, high_size;
 	uint32_t hash_size;
 
-	uint32_t high_run, low_run, cleanup_run;
-
 	struct xqx_map *map_first, *map_last;
 	struct xqx_map_cache_client *query_first[MAX_PRIO+1];
 	struct xqx_map_cache_client *query_last[MAX_PRIO+1];
