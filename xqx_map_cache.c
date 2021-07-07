@@ -322,13 +322,13 @@ static void register_event_source(void)
 	static gp_task high_prio = {
 		.id = "xqx cache high prio",
 		.callback = cache_high_iteration,
-		.prio = 0
+		.prio = 1,
 	};
 
 	static gp_task low_prio = {
 		.id = "xqx cache low prio",
 		.callback = cache_low_iteration,
-		.prio = 1,
+		.prio = 2,
 	};
 
 	if ((prio == MAX_PRIO) && (!cache->high_run)) {
@@ -358,7 +358,7 @@ static void register_cleanup(void)
 	static gp_task cleanup = {
 		.id = "xqx cache cleanup",
 		.callback = cache_cleanup_iteration,
-		.prio = 10,
+		.prio = 3,
 	};
 
 	if (!cache->cleanup_run) {
