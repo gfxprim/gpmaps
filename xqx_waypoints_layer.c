@@ -38,7 +38,8 @@ static void waypoints_layer_render(void *wl_i, struct xqx_view *vw, gp_pixmap *p
 		y /= vw->scale_main;
 		y += vw->h / 2;
 
-		gp_fill_circle(pixmap, x, y, 3, 0xff);
+		gp_fill_circle(pixmap, x, y, wl->point_r, wl->point_color);
+		gp_fill_circle(pixmap, x, y, wl->line_r, wl->line_color);
 
 		if (first) {
 			first = 0;
@@ -47,7 +48,7 @@ static void waypoints_layer_render(void *wl_i, struct xqx_view *vw, gp_pixmap *p
 			continue;
 		}
 
-		gp_line(pixmap, x, y, px, py, 0x000000);
+		gp_line_th(pixmap, x, y, px, py, wl->line_r, wl->line_color);
 
 		px = x;
 		py = y;
@@ -63,11 +64,17 @@ struct xqx_waypoints_layer *xqx_make_waypoints_layer(struct xqx_path *path)
 
 	wl->common.render_cb = waypoints_layer_render;
 	wl->path = path;
+	wl->line_r = 1;
+	wl->point_r = 3;
+
+	wl->point_color = 0x0000ff;
+	wl->line_color = 0x000000;
 
 	return wl;
 }
 
 void xqx_discard_waypoints_layer(struct xqx_waypoints_layer *wl)
 {
+	xqx_path_free(wl->path);
 	free(wl);
 }

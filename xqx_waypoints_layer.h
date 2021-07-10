@@ -17,6 +17,12 @@ struct xqx_waypoints_layer
 {
 	struct xqx_view_layer common;
 	struct xqx_path *path;
+
+	unsigned int line_r;
+	unsigned int point_r;
+
+	gp_pixel line_color;
+	gp_pixel point_color;
 };
 
 struct xqx_waypoints_layer *xqx_make_waypoints_layer(struct xqx_path *path);
