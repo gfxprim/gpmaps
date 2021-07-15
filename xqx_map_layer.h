@@ -27,6 +27,8 @@ struct xqx_map_layer {
 	uint32_t tx1, tx2, tx3, tx4, ty1, ty2, ty3, ty4;
 	uint32_t t2x1, t2x2, t2y1, t2y2;
 	uint32_t ax, ay, as;
+
+	gp_pixel bg_color;
 };
 
 struct xqx_map_layer *xqx_make_map_layer(struct xqx_map *map);

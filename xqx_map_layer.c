@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 /*
  * Copyright (c) 2006-2008 Ondrej 'SanTiago' Zajicek
- * Copyright (c) 2021 Cyrml Hrubis <metan@ucw.cz>
+ * Copyright (c) 2021 Cyril Hrubis <metan@ucw.cz>
  */
 
 #include "xqx_map_layer.h"
@@ -290,8 +290,13 @@ static void map_layer_render(void *ml_i, struct xqx_view *vw, gp_pixmap *dst, st
 	hx = (hx > (int)ml->tx3) ? (int)ml->tx3 : hx;
 	hy = (hy < (int)ml->ty3) ? (int)ml->ty3 : hy;
 
-	// printf("RENDER (%d %d) - (%d %d)\n", lx, ly, hx, hy);
+	//TODO: Optimize?
+	gp_fill_rect_xyxy(dst, rect->lx, rect->ly, rect->hx, rect->hy, ml->bg_color);
+
+	//printf("*** RENDER (%d %d) - (%d %d)\n", lx, ly, hx, hy);
+
 	int i, j;
+
 	for (i = lx; i < hx; i++) {
 		for (j = ly; j < hy; j++) {
 			int ax = (i - ml->tx2) * tw + ml->pix_off_x;
@@ -315,6 +320,7 @@ static void map_layer_render(void *ml_i, struct xqx_view *vw, gp_pixmap *dst, st
 			} else if (cn->state == XQX_CACHE_NODE_VALID_DATA) {
 				//printf("DRAW (%d %d) at (%d %d)\n", i, j, ax, ay);
 				gp_pixmap *pb = cn->data;
+
 				gp_blit_xywh_clipped(pb, 0, 0, aw, ah, dst, ax, ay);
 			} else if (cn->state == XQX_CACHE_NODE_VALID_COLOR) {
 				//printf("COLOR (%d %d) at (%d %d)\n", i, j, ax, ay);
