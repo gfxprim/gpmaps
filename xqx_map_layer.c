@@ -4,6 +4,7 @@
  * Copyright (c) 2021 Cyril Hrubis <metan@ucw.cz>
  */
 
+#include <filters/gp_point.h>
 #include "xqx_map_layer.h"
 
 static uint32_t search_array(struct xqx_map_layer *ml, unsigned int level, int lx, unsigned int hx, unsigned int hy)
@@ -319,9 +320,20 @@ static void map_layer_render(void *ml_i, struct xqx_view *vw, gp_pixmap *dst, st
 				/* FIXME add scaling of larger */
 			} else if (cn->state == XQX_CACHE_NODE_VALID_DATA) {
 				//printf("DRAW (%d %d) at (%d %d)\n", i, j, ax, ay);
-				gp_pixmap *pb = cn->data;
+				gp_pixmap *pb = cn->data, *tmp;
 
-				gp_blit_xywh_clipped(pb, 0, 0, aw, ah, dst, ax, ay);
+				int invert_pixmap = gp_widgets_color_scheme_get() == GP_WIDGET_COLOR_SCHEME_DARK;
+				printf("INVERT PIXMAP %i\n", invert_pixmap);
+				if (invert_pixmap)
+					tmp = gp_filter_invert_alloc(pb, NULL);
+				else
+					tmp = pb;
+
+				gp_blit_xywh_clipped(tmp, 0, 0, aw, ah, dst, ax, ay);
+
+				if (invert_pixmap)
+					gp_pixmap_free(tmp);
+
 			} else if (cn->state == XQX_CACHE_NODE_VALID_COLOR) {
 				//printf("COLOR (%d %d) at (%d %d)\n", i, j, ax, ay);
 				uint32_t rgb = (uintptr_t) cn->data;
