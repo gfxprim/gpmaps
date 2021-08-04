@@ -2,3 +2,6 @@ gpmaps
 ======
 
 A map viewer and navigation based on code from Ondrej \'SanTiago' Zajicek.
+
+image::https://raw.githubusercontent.com/gfxprim/gpmaps/master/gpmaps.png["Screenshot"]
+
