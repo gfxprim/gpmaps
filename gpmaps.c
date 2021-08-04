@@ -59,6 +59,66 @@ static struct xqx_gps_notify widget_gps = {
 
 void *xqx_make_waypoints_layer(void*);
 
+int zoom_in_event(gp_widget_event *ev)
+{
+	if (ev->type != GP_WIDGET_EVENT_WIDGET)
+		return 0;
+
+	xqx_view_zoom_in(main_view, 2<<10);
+
+	return 0;
+}
+
+int zoom_out_event(gp_widget_event *ev)
+{
+	if (ev->type != GP_WIDGET_EVENT_WIDGET)
+		return 0;
+
+	xqx_view_zoom_out(main_view, 2<<10);
+
+	return 0;
+}
+
+int move_up_event(gp_widget_event *ev)
+{
+	if (ev->type != GP_WIDGET_EVENT_WIDGET)
+		return 0;
+
+	xqx_view_move(main_view, 0, main_view->step_y);
+
+	return 0;
+}
+
+int move_down_event(gp_widget_event *ev)
+{
+	if (ev->type != GP_WIDGET_EVENT_WIDGET)
+		return 0;
+
+	xqx_view_move(main_view, 0, -main_view->step_y);
+
+	return 0;
+}
+
+int move_left_event(gp_widget_event *ev)
+{
+	if (ev->type != GP_WIDGET_EVENT_WIDGET)
+		return 0;
+
+	xqx_view_move(main_view, main_view->step_x, 0);
+
+	return 0;
+}
+
+int move_right_event(gp_widget_event *ev)
+{
+	if (ev->type != GP_WIDGET_EVENT_WIDGET)
+		return 0;
+
+	xqx_view_move(main_view, -main_view->step_x, 0);
+
+	return 0;
+}
+
 int main(int argc, char *argv[])
 {
 	gp_htable *uids;
@@ -78,7 +138,7 @@ int main(int argc, char *argv[])
 
 	xqx_init();
 
-	map = xqx_map_load("example-data/cz-osm-example/old.tmc");
+	map = xqx_map_load("../maps/cz-osm-2018/old.tmc");
 	if (!map)
 		printf("FAILED TO LOAD MAP\n");
 
