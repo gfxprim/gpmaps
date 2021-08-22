@@ -138,7 +138,7 @@ int main(int argc, char *argv[])
 
 	xqx_init();
 
-	map = xqx_map_load("../maps/cz-osm-2018/old.tmc");
+	map = xqx_map_load("example-data/cz-osm-example/old.tmc");
 	if (!map)
 		printf("FAILED TO LOAD MAP\n");
 
