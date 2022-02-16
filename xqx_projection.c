@@ -1,48 +1,53 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 /*
- * Copyright (c) 2021 Cyril Hrubis <metan@ucw.cz>
+ * Copyright (c) 2021-2022 Cyril Hrubis <metan@ucw.cz>
  */
 
 #include <stdio.h>
-#define ACCEPT_USE_OF_DEPRECATED_PROJ_API_H 1
-#include <proj_api.h>
+#include <proj.h>
+#include <math.h>
 #include "xqx_projection.h"
 
-static projPJ proj_wgs84;
-static projPJ proj_epsg;
+static PJ *cur_proj;
 static unsigned int cur_epsg;
 
 int xqx_wgs84_to_coords(unsigned int epsg, double lat, double lon, double alt,
                         int32_t *x, int32_t *y, int32_t *z)
 {
-	if (!proj_wgs84) {
-		proj_wgs84 = pj_init_plus("+proj=latlong +datum=WGS84");
-
-		if (!proj_wgs84)
-			return 1;
-	}
-
 	if (cur_epsg != epsg) {
 		char buf[40];
 
-		sprintf(buf, "+init=epsg:%d", epsg);
-		proj_epsg = pj_init_plus(buf);
+		proj_context_use_proj4_init_rules(PJ_DEFAULT_CTX, 1);
 
-		if (!proj_epsg)
+		sprintf(buf, "+init=epsg:%d", epsg);
+
+		if (cur_proj)
+			proj_destroy(cur_proj);
+
+		cur_proj = proj_create_crs_to_crs(PJ_DEFAULT_CTX,
+		                                  "+proj=latlong +datum=WGS84",
+						  buf,
+						  NULL);
+		if (!cur_proj)
 			return 1;
 
 		cur_epsg = epsg;
 	}
 
-	double dx = lon * DEG_TO_RAD;
-	double dy = lat * DEG_TO_RAD;
-	double dz = alt;
+	PJ_COORD c_in = {
+		.lpzt = {
+			.lam = lon,
+			.phi = lat,
+			.z = alt,
+			.t = HUGE_VAL,
+		},
+	};
 
-	pj_transform(proj_wgs84, proj_epsg, 1, 1, &dx, &dy, &dz);
+	PJ_COORD c_out = proj_trans(cur_proj, PJ_FWD, c_in);
 
-	*x = dx * 16;
-	*y = dy * 16;
-	*z = dz * 16;
+	*x = c_out.xyz.x * 16;
+	*y = c_out.xyz.y * 16;
+	*z = c_out.xyz.z * 16;
 
 	return 0;
 }
