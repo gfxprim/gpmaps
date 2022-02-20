@@ -426,7 +426,7 @@ struct xqx_view *xqx_make_view(gp_widget *pixmap)
 
 	//view_resize(vw);
 
-	gp_widget_event_handler_set(pixmap, view_pixmap_on_event, vw);
+	gp_widget_on_event_set(pixmap, view_pixmap_on_event, vw);
 	gp_widget_event_unmask(pixmap, GP_WIDGET_EVENT_REDRAW);
 	gp_widget_event_unmask(pixmap, GP_WIDGET_EVENT_RESIZE);
 	gp_widget_event_unmask(pixmap, GP_WIDGET_EVENT_INPUT);
