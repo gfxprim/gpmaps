@@ -1,46 +1,43 @@
 {
- "version": 1,
- "cols": 2,
- "align": "fill",
- "cfill": "1, 0",
- "cpad": "3 * 0",
- "border": "none",
- "widgets": [
-  {
-   "rows": 2,
-   "align": "fill",
-   "rfill": "1, 0",
-   "border": "none",
-   "widgets": [
-    {
-     "align": "fill",
-     "type": "pixmap",
-     "uid": "map_view",
-     "w": 400, "h": 300
-    },
-    {
-     "cols": 3,
-     "border": "none",
-     "widgets": [
-      {"type": "label", "text": "GPS:", "tattr": "bold"},
-      {"type": "label", "text": "unknown", "uid": "gps_status"},
-      {"type": "label", "text": "+-??m", "uid": "gps_error"}
-     ]
-    }
-   ]
-  },
-  {
-   "rows": 7,
-   "valign": "fill",
-   "widgets": [
-    {"type": "color_scheme_switch", "align": "fill"},
-    {"type": "button", "btype": "up", "align": "fill", "on_event": "move_up_event"},
-    {"type": "button", "btype": "down", "align": "fill", "on_event": "move_down_event"},
-    {"type": "button", "btype": "left", "align": "fill", "on_event": "move_left_event"},
-    {"type": "button", "btype": "right", "align": "fill", "on_event": "move_right_event"},
-    {"type": "button", "btype": "zoom_in", "align": "fill", "on_event": "zoom_in_event"},
-    {"type": "button", "btype": "zoom_out", "align": "fill", "on_event": "zoom_out_event"}
-   ]
-  }
- ]
+ "info": {"version": 1, "license": "GPL-2.1-or-later", "author": "Cyril Hrubis <metan@ucw.cz>"},
+ "layout": {
+  "cols": 2,
+  "align": "fill",
+  "cfill": "1, 0",
+  "cpad": "3 * 0",
+  "border": "none",
+  "widgets": [
+   {
+    "rows": 2,
+    "align": "fill",
+    "rfill": "1, 0",
+    "border": "none",
+    "widgets": [
+     {"align": "fill", "type": "pixmap", "uid": "map_view", "w": 400, "h": 300},
+     {
+      "cols": 3,
+      "border": "none",
+      "widgets": [
+       {"type": "label", "text": "GPS:", "tattr": "bold"},
+       {"type": "label", "text": "unknown", "uid": "gps_status"},
+       {"type": "label", "text": "+-??m", "uid": "gps_error"}
+      ]
+     }
+    ]
+   },
+   {
+    "rows": 7,
+    "valign": "fill",
+    "widgets": [
+     {"type": "color_scheme_switch", "align": "fill"},
+     {"type": "button", "btype": "up", "align": "fill", "on_event": "move_up_event"},
+     {"type": "button", "btype": "down", "align": "fill", "on_event": "move_down_event"},
+     {"type": "button", "btype": "left", "align": "fill", "on_event": "move_left_event"},
+     {"type": "button", "btype": "right", "align": "fill", "on_event": "move_right_event"},
+     {"type": "button", "btype": "zoom_in", "align": "fill", "on_event": "zoom_in_event"},
+     {"type": "button", "btype": "zoom_out", "align": "fill", "on_event": "zoom_out_event"}
+    ]
+   }
+  ]
+ }
 }
