@@ -201,8 +201,6 @@ struct xqx_path *xqx_path_geojson(const char *pathname)
 	if (!json)
 		return NULL;
 
-	json->msgf = stderr;
-
 	if (gp_json_next_type(json) != GP_JSON_OBJ) {
 		gp_json_warn(json, "Expected object!");
 		return NULL;
