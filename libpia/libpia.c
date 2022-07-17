@@ -115,7 +115,8 @@ struct pia_file *make_pia(const char *filename, unsigned int tbl_w, unsigned int
 	obj->hdr.tile_height = tile_h;
 	obj->hdr.empty_color = empty_color;
 	obj->hdr.reserved = 0;
-	strncpy(obj->hdr.suffix, suffix, 8);
+	strncpy(obj->hdr.suffix, suffix, sizeof(obj->hdr.suffix)-1);
+	obj->hdr.suffix[sizeof(obj->hdr.suffix)-1] = 0;
 
 	obj->table = calloc(ts, sizeof(struct pia_node));
 	if (!obj->table) {
