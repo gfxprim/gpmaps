@@ -17,6 +17,11 @@ gpmaps: gpmaps.o libpia/libpia.o xqx_map.o xqx_map_tmc.o xqx_pixmap.o \
 %.dep: %.c
 	$(CC) $(CFLAGS) -M $< -o $@
 
+install:
+	install -D $(BIN) -t $(DESTDIR)/usr/bin/
+	install -m 644 -D layout.json $(DESTDIR)/etc/gp_apps/$(BIN)/layout.json
+	make -C libpia/ install
+
 -include $(DEP)
 
 clean:
