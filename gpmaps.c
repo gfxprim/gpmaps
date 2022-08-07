@@ -1,8 +1,8 @@
-//SPDX-License-Identifier: GPL-2.1-or-later
+//SPDX-License-Identifier: GPL-2.0-or-later
 
 /*
 
-    Copyright (C) 2021 Cyril Hrubis <metan@ucw.cz>
+    Copyright (C) 2021-2022 Cyril Hrubis <metan@ucw.cz>
 
  */
 
@@ -119,10 +119,25 @@ int move_right_event(gp_widget_event *ev)
 	return 0;
 }
 
+static gp_app_info app_info = {
+	.name = "gpmaps",
+	.desc = "A map viewer and navigation with GPS support",
+	.version = "1.0",
+	.license = "GPL-2.0-or-later",
+	.url = "http://github.com/gfxprim/gpmaps",
+	.authors = (gp_app_info_author []) {
+		{.name = "Cyril Hrubis", .email = "metan@ucw.cz", .years = "2021-2022"},
+		{.name = "Ondrej 'SanTiago' Zajicek", .years = "2006-2008"},
+		{}
+	}
+};
+
 int main(int argc, char *argv[])
 {
 	gp_htable *uids;
 	gp_widget *layout = gp_app_layout_load("gpmaps", &uids);
+
+	gp_app_info_set(&app_info);
 
 	gp_widget *pixmap = gp_widget_by_uid(uids, "map_view", GP_WIDGET_PIXMAP);
 	if (!pixmap)
