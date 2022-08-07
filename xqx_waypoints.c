@@ -79,7 +79,7 @@ void xqx_path_print(struct xqx_path *path)
 	}
 }
 
-static struct xqx_path *path_from_coordinates(gp_json_buf *json, gp_json_val *val)
+static struct xqx_path *path_from_coordinates(gp_json_reader *json, gp_json_val *val)
 {
 	struct xqx_path *path;
 
@@ -131,7 +131,7 @@ err0:
 	return NULL;
 }
 
-static struct xqx_path *path_from_geometry(gp_json_buf *json, gp_json_val *val)
+static struct xqx_path *path_from_geometry(gp_json_reader *json, gp_json_val *val)
 {
 	struct xqx_path *ret = NULL;
 
@@ -156,7 +156,7 @@ static struct xqx_path *path_from_geometry(gp_json_buf *json, gp_json_val *val)
 	return ret;
 }
 
-static struct xqx_path *path_from_geojson(struct gp_json_buf *json)
+static struct xqx_path *path_from_geojson(struct gp_json_reader *json)
 {
 	char buf[64];
 	gp_json_val val = {.buf = buf, .buf_size = sizeof(buf)};
@@ -194,10 +194,10 @@ static struct xqx_path *path_from_geojson(struct gp_json_buf *json)
 
 struct xqx_path *xqx_path_geojson(const char *pathname)
 {
-	struct gp_json_buf *json;
+	struct gp_json_reader *json;
 	struct xqx_path *path = NULL;
 
-	json = gp_json_load(pathname);
+	json = gp_json_reader_load(pathname);
 	if (!json)
 		return NULL;
 
@@ -208,12 +208,12 @@ struct xqx_path *xqx_path_geojson(const char *pathname)
 
 	path = path_from_geojson(json);
 
-	if (gp_json_is_err(json))
+	if (gp_json_reader_err(json))
 		gp_json_err_print(json);
 	else if (!gp_json_empty(json))
 		gp_json_warn(json, "Garbage after JSON");
 
-	gp_json_free(json);
+	gp_json_reader_free(json);
 
 	return path;
 }
