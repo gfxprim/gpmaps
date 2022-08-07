@@ -122,7 +122,7 @@ int move_right_event(gp_widget_event *ev)
 int main(int argc, char *argv[])
 {
 	gp_htable *uids;
-	gp_widget *layout = gp_app_layout_load("gpmap", &uids);
+	gp_widget *layout = gp_app_layout_load("gpmaps", &uids);
 
 	gp_widget *pixmap = gp_widget_by_uid(uids, "map_view", GP_WIDGET_PIXMAP);
 	if (!pixmap)
