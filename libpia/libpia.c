@@ -183,10 +183,12 @@ int pia_close(struct pia_file *obj)
 		return 1;
 	}
 
+	int fd = obj->fd;
+
 	free(obj->table);
 	free(obj);
 
-	return close(obj->fd);
+	return close(fd);
 }
 
 static uint64_t get_item_index(struct pia_file *obj, uint32_t x, uint32_t y)
