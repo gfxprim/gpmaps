@@ -38,7 +38,7 @@ static uint32_t gps_notify_no_data(gp_timer *self)
 
 	gps_notify_broadcast(XQX_GPS_MSG_NO_DATA, NULL);
 
-	return 0;
+	return GP_TIMER_STOP;
 }
 
 static uint32_t gpsd_reconnect(gp_timer *self)
@@ -46,7 +46,7 @@ static uint32_t gpsd_reconnect(gp_timer *self)
 	(void)self;
 
 	if (xqx_gps_connect())
-		return 0;
+		return GP_TIMER_STOP;
 	else
 		return gps_reconnect_delay_ms;
 }
