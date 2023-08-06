@@ -78,12 +78,11 @@ static void gps_cancel_reconnect(void)
 	gp_widgets_timer_rem(&gps_reconnect);
 }
 
-static int read_gps(struct gp_fd *self, struct pollfd *pfd)
+static int read_gps(struct gp_fd *self)
 {
 	int ret;
 
 	(void) self;
-	(void) pfd;
 
 	gp_widgets_timer_rem(&gps_read_timeout);
 
@@ -126,14 +125,14 @@ static void gps_connect(void)
 
 	gps_stream(&gpsdata, WATCH_ENABLE, NULL);
 
-	gp_fds_add(gp_widgets_fds, gpsdata.gps_fd, POLLIN, read_gps, NULL);
+	gp_widget_fds_add(gpsdata.gps_fd, POLLIN, read_gps, NULL);
 
 	gp_widgets_timer_ins(&gps_read_timeout);
 }
 
 void gps_disconnect(void)
 {
-	gp_fds_rem(gp_widgets_fds, gpsdata.gps_fd);
+	gp_widget_fds_rem(gpsdata.gps_fd);
 	gps_close(&gpsdata);
 	gpsdata.gps_fd = 0;
 }
