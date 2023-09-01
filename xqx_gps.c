@@ -116,6 +116,11 @@ static int gps_is_connected(void)
 	return gpsdata.gps_fd != 0;
 }
 
+static gp_fd gps_fd = {
+	.events = GP_POLLIN,
+	.event = read_gps,
+};
+
 static void gps_connect(void)
 {
 	if (gps_open(gps_addr, gps_port, &gpsdata)) {
@@ -125,14 +130,16 @@ static void gps_connect(void)
 
 	gps_stream(&gpsdata, WATCH_ENABLE, NULL);
 
-	gp_widget_fds_add(gpsdata.gps_fd, POLLIN, read_gps, NULL);
+	gps_fd.fd = gpsdata.gps_fd;
+
+	gp_widget_poll_add(&gps_fd);
 
 	gp_widgets_timer_ins(&gps_read_timeout);
 }
 
 void gps_disconnect(void)
 {
-	gp_widget_fds_rem(gpsdata.gps_fd);
+	gp_widget_poll_rem(&gps_fd);
 	gps_close(&gpsdata);
 	gpsdata.gps_fd = 0;
 }
