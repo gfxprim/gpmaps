@@ -119,7 +119,7 @@ int move_right_event(gp_widget_event *ev)
 	return 0;
 }
 
-static gp_app_info app_info = {
+gp_app_info app_info = {
 	.name = "gpmaps",
 	.desc = "A map viewer and navigation with GPS support",
 	.version = "1.0",
@@ -136,8 +136,6 @@ int main(int argc, char *argv[])
 {
 	gp_htable *uids;
 	gp_widget *layout = gp_app_layout_load("gpmaps", &uids);
-
-	gp_app_info_set(&app_info);
 
 	gp_widget *pixmap = gp_widget_by_uid(uids, "map_view", GP_WIDGET_PIXMAP);
 	if (!pixmap)
@@ -171,7 +169,7 @@ int main(int argc, char *argv[])
 		xqx_view_prepend_layer(main_view, xqx_make_waypoints_layer(path));
 	}
 
-	gp_widgets_main_loop(layout, "gpmap", NULL, argc, argv);
+	gp_widgets_main_loop(layout, NULL, argc, argv);
 
 	return 0;
 }
