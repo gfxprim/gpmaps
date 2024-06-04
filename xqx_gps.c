@@ -78,7 +78,7 @@ static void gps_cancel_reconnect(void)
 	gp_widgets_timer_rem(&gps_reconnect);
 }
 
-static int read_gps(struct gp_fd *self)
+static enum gp_poll_event_ret read_gps(struct gp_fd *self)
 {
 	int ret;
 
