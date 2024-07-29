@@ -208,11 +208,7 @@ struct xqx_path *xqx_path_geojson(const char *pathname)
 
 	path = path_from_geojson(json);
 
-	if (gp_json_reader_err(json))
-		gp_json_err_print(json);
-	else if (!gp_json_empty(json))
-		gp_json_warn(json, "Garbage after JSON");
-
+	gp_json_reader_finish(json);
 	gp_json_reader_free(json);
 
 	return path;
