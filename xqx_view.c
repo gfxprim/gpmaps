@@ -306,7 +306,7 @@ static void view_resize(struct xqx_view *vw)
 static void view_redraw(gp_widget_event *ev)
 {
 	struct xqx_view *vw = ev->self->priv;
-	gp_pixmap *pixmap = ev->self->pixmap->pixmap;
+	gp_pixmap *pixmap = gp_widget_pixmap_get(ev->self);
 
 	if (!vw->valid)
 		return;
