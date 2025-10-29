@@ -67,7 +67,7 @@ static void gps_schedulle_reconnect(void)
 		return;
 
 	gps_reconnect.expires = gps_reconnect_delay_ms;
-	gp_widgets_timer_ins(&gps_reconnect);
+	gp_app_timer_start(&gps_reconnect);
 }
 
 static void gps_cancel_reconnect(void)
@@ -75,7 +75,7 @@ static void gps_cancel_reconnect(void)
 	if (!gps_reconnect_delay_ms)
 		return;
 
-	gp_widgets_timer_rem(&gps_reconnect);
+	gp_app_timer_stop(&gps_reconnect);
 }
 
 static enum gp_poll_event_ret read_gps(struct gp_fd *self)
@@ -84,7 +84,7 @@ static enum gp_poll_event_ret read_gps(struct gp_fd *self)
 
 	(void) self;
 
-	gp_widgets_timer_rem(&gps_read_timeout);
+	gp_app_timer_stop(&gps_read_timeout);
 
 #if GPSD_API_MAJOR_VERSION >= 10
         ret = gps_read(&gpsdata, NULL, 0);
@@ -106,7 +106,7 @@ static enum gp_poll_event_ret read_gps(struct gp_fd *self)
 	gps_notify_broadcast(XQX_GPS_MSG_FIX, &gpsdata.fix);
 
 	gps_read_timeout.expires = 5000;
-	gp_widgets_timer_ins(&gps_read_timeout);
+	gp_app_timer_start(&gps_read_timeout);
 
 	return 0;
 }
@@ -134,7 +134,7 @@ static void gps_connect(void)
 
 	gp_widget_poll_add(&gps_fd);
 
-	gp_widgets_timer_ins(&gps_read_timeout);
+	gp_app_timer_start(&gps_read_timeout);
 }
 
 void gps_disconnect(void)
