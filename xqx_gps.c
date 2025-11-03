@@ -132,14 +132,14 @@ static void gps_connect(void)
 
 	gps_fd.fd = gpsdata.gps_fd;
 
-	gp_widget_poll_add(&gps_fd);
+	gp_app_poll_add(&gps_fd);
 
 	gp_app_timer_start(&gps_read_timeout);
 }
 
 void gps_disconnect(void)
 {
-	gp_widget_poll_rem(&gps_fd);
+	gp_app_poll_rem(&gps_fd);
 	gps_close(&gpsdata);
 	gpsdata.gps_fd = 0;
 }

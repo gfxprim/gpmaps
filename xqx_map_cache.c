@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <widgets/gp_widgets_task.h>
+#include <widgets/gp_app_task.h>
 
 #include "xqx_map.h"
 #include "xqx_map_cache.h"
@@ -325,12 +325,12 @@ static void register_event_source(void)
 
 	if (prio == MAX_PRIO) {
 		printf("CACHE MAX!\n");
-		gp_widgets_task_ins(&high_prio);
+		gp_app_task_start(&high_prio);
 	}
 
 	if (prio > 0) {
 		printf("CACHE LOW!\n");
-		gp_widgets_task_ins(&low_prio);
+		gp_app_task_start(&low_prio);
 	}
 }
 
@@ -350,5 +350,5 @@ static void register_cleanup(void)
 		.prio = 3,
 	};
 
-	gp_widgets_task_ins(&cleanup);
+	gp_app_task_start(&cleanup);
 }
